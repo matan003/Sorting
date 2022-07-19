@@ -12,6 +12,15 @@ class DrawInformation:
 	GREY = 128, 128, 128
 	BACKGROUND_COLOR = WHITE
 
+	GRADIENTS = [
+		GREY,
+		(160, 160, 160),
+		(192, 192, 192)
+	]
+
+	SIDE_PAD = 100
+	TOP_PAD = 150
+
 	def __init__(self, width, height, lst):
 		self.width = width
 		self.height = height
@@ -20,28 +29,54 @@ class DrawInformation:
 		pygame.display.set_caption("Sorting algorithm visualizer")
 		self.set_list(lst)
 
-	def set_list(self, lst)
+	def set_list(self, lst):
+		self.lst = lst
+		self.min_val = min(lst)
+		self.max_val = max(lst)
 
-# set up the drawing window
-screen = pygame.display.set_mode([500, 500])
+		self.block_width = round((self.width - self.SIDE_PAD) / len(lst))
+		self.block_height = round((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
+		self.start_x = self.SIDE_PAD // 2
 
-# run until quit
-running = True
-while running:
+	def draw(self):
+		self.window.fill(self.BACKGROUND_COLOR)
+		pygame.display.update()
 
-	# quit if user presses exit button
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
+	def draw_list(self):
+		for i, val in enumerate(self.lst):
+			x = self.start_x + i * self.block_width
+			y = 
 
-	# fill the background with white color
-	screen.fill((255, 255, 255))
+def generate_starting_list(n, min_val, max_val):
+	lst = []
 
-	# draw a square in the center
-	pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(250, 250, 50, 50))
+	for _ in range(n):
+		val = random.randint(min_val, max_val)
+		lst.append(val)
 
-	#update display
-	pygame.display.update()
+	return lst
 
-# quit
-pygame.quit()
+def main():
+	run = True
+	clock = pygame.time.Clock()
+
+	n = 50
+	min_val = 0
+	max_val = 100
+
+	lst = generate_starting_list(n, min_val, max_val)
+	draw_info = DrawInformation(800, 600, lst)
+
+	while run:
+		clock.tick(60)
+
+		draw_info.draw()
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
+
+	pygame.quit()
+
+if __name__ == "__main__":
+	main()
