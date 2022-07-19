@@ -18,6 +18,8 @@ class DrawInformation:
 		(192, 192, 192)
 	]
 
+	FONT = pygame.font.SysFont('comicsans', 30)
+	LARGE_FONT = pygame.font.SysFont('comicsans', 40)
 	SIDE_PAD = 100
 	TOP_PAD = 150
 
@@ -40,12 +42,17 @@ class DrawInformation:
 
 	def draw(self):
 		self.window.fill(self.BACKGROUND_COLOR)
+		self.draw_list()
 		pygame.display.update()
 
 	def draw_list(self):
 		for i, val in enumerate(self.lst):
 			x = self.start_x + i * self.block_width
-			y = 
+			y = self.height - (val - self.min_val) * self.block_height
+
+			color = self.GRADIENTS[i % 3]
+			print(self.block_height)
+			pygame.draw.rect(self.window, color, (x, y, self.block_width, self.height)) # fix this
 
 def generate_starting_list(n, min_val, max_val):
 	lst = []
@@ -66,6 +73,10 @@ def main():
 
 	lst = generate_starting_list(n, min_val, max_val)
 	draw_info = DrawInformation(800, 600, lst)
+	sorting = False
+	ascending = True
+
+	print(draw_info.height)
 
 	while run:
 		clock.tick(60)
@@ -75,6 +86,20 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False
+			
+			if event.type != pygame.KEYDOWN:
+				continue
+				
+			if event.key == pygame.K_r:
+				lst = generate_starting_list(n, min_val, max_val)
+				draw_info.set_list(lst)
+			
+			elif event.key == pygame.K_SPACE and sorting == False:
+				sorting = True
+			elif event.key == pygame.K_a and not sorting:
+				ascending = True
+			elif event.key == pygame.K_d and not sorting:
+				ascending = False
 
 	pygame.quit()
 
