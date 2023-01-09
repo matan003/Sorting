@@ -2,6 +2,7 @@
 import pygame
 import random
 from algorithms.bubble_sort import bubble_sort
+from algorithms.insertion_sort import insertion_sort
 
 import draw_information
 
@@ -36,7 +37,7 @@ def main():
 	print(draw_info.height)
 
 	while run:
-		clock.tick(60)
+		clock.tick(30)
 
 		if sorting:
 			try:
@@ -66,6 +67,12 @@ def main():
 				ascending = True
 			elif event.key == pygame.K_d and not sorting:
 				ascending = False
+			elif event.key == pygame.K_i and not sorting:
+				sorting_algorithm = insertion_sort
+				sorting_algorithm_name = "Insertion Sort"
+			elif event.key == pygame.K_b and not sorting:
+				sorting_algorithm = bubble_sort
+				sorting_algorithm_name = "Bubble Sort"
 
 	pygame.quit()
 
