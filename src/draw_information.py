@@ -47,7 +47,7 @@ class DrawInformation:
 		controls = self.FONT.render("R - Reset | SPACE - Start sorting | A - Ascending | D - Descending", 1, self.BLACK)
 		self.window.blit(controls, (self.width/2 - controls.get_width()/2, 45))
 
-		sorting = self.FONT.render("I - Insertion sort | B - Bubble sort", 1, self.BLACK)
+		sorting = self.FONT.render("I - Insertion sort | B - Bubble sort | S - Selection sort", 1, self.BLACK)
 		self.window.blit(sorting, (self.width/2 - sorting.get_width()/2, 75))
 		
 		self.draw_list()

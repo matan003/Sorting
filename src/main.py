@@ -3,6 +3,7 @@ import pygame
 import random
 from algorithms.bubble_sort import bubble_sort
 from algorithms.insertion_sort import insertion_sort
+from algorithms.selection_sort import selection_sort
 
 import draw_information
 
@@ -73,6 +74,9 @@ def main():
 			elif event.key == pygame.K_b and not sorting:
 				sorting_algorithm = bubble_sort
 				sorting_algorithm_name = "Bubble Sort"
+			elif event.key == pygame.K_s and not sorting:
+				sorting_algorithm = selection_sort
+				sorting_algorithm_name = "Selection Sort"
 
 	pygame.quit()
 
