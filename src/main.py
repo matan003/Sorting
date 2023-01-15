@@ -68,15 +68,27 @@ def main():
 				ascending = True
 			elif event.key == pygame.K_d and not sorting:
 				ascending = False
-			elif event.key == pygame.K_i and not sorting:
-				sorting_algorithm = insertion_sort
-				sorting_algorithm_name = "Insertion Sort"
-			elif event.key == pygame.K_b and not sorting:
-				sorting_algorithm = bubble_sort
-				sorting_algorithm_name = "Bubble Sort"
 			elif event.key == pygame.K_s and not sorting:
-				sorting_algorithm = selection_sort
-				sorting_algorithm_name = "Selection Sort"
+				in_menu = True
+				while(in_menu):
+					draw_info.draw_menu()
+
+					for event in pygame.event.get():
+						if event.type == pygame.MOUSEBUTTONDOWN:
+							#Determine what was selected
+							#Update algo and algo name
+
+							buttons = draw_info.get_menu_buttons()
+							for button in buttons:
+								if button.rect.collidepoint(event.pos):
+									sorting_algorithm_name = button.name
+									sorting_algorithm = eval(sorting_algorithm_name.lower().replace(" ", "_"))
+									in_menu = False
+
+							#set in_menu to false to exit
+							pass
+						if event.type == pygame.QUIT:
+							pygame.quit()
 
 	pygame.quit()
 

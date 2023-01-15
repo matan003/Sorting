@@ -1,5 +1,6 @@
 # information needed to draw the grid
 import pygame
+import button
 
 pygame.init()
 
@@ -21,6 +22,8 @@ class DrawInformation:
 	SIDE_PAD = 100
 	TOP_PAD = 150
 
+	_menu_buttons = [button.Button("Bubble Sort"), button.Button("Insertion Sort"), button.Button("Selection Sort")]
+
 	def __init__(self, width, height, lst):
 		self.width = width
 		self.height = height
@@ -28,6 +31,9 @@ class DrawInformation:
 		self.window = pygame.display.set_mode((width, height))
 		pygame.display.set_caption("Sorting algorithm visualizer")
 		self.set_list(lst)
+
+	def get_menu_buttons(self):
+		return self._menu_buttons
 
 	def set_list(self, lst):
 		self.lst = lst
@@ -47,7 +53,7 @@ class DrawInformation:
 		controls = self.FONT.render("R - Reset | SPACE - Start sorting | A - Ascending | D - Descending", 1, self.BLACK)
 		self.window.blit(controls, (self.width/2 - controls.get_width()/2, 45))
 
-		sorting = self.FONT.render("I - Insertion sort | B - Bubble sort | S - Selection sort", 1, self.BLACK)
+		sorting = self.FONT.render("S - Select algorithm", 1, self.BLACK)
 		self.window.blit(sorting, (self.width/2 - sorting.get_width()/2, 75))
 		
 		self.draw_list()
@@ -72,3 +78,23 @@ class DrawInformation:
 		
 		if clear_bg:
 			pygame.display.update()
+
+	def draw_menu(self):
+		self.window.fill(self.BACKGROUND_COLOR)
+
+		title_text = self.FONT.render("Sorting Algorithms", True, self.BLACK)
+		title_rect = title_text.get_rect()
+		title_rect.center = (self.width // 8, 50) # // is floor division
+		self.window.blit(title_text, title_rect)
+
+		for i, button in enumerate(self._menu_buttons):
+			button.text = button.name
+			button.text = self.FONT.render(button.text, True, self.BLACK)
+			button.rect = button.text.get_rect()
+			button.rect.center = (self.width // 8, 150 + i * 50)
+			self.window.blit(button.text, button.rect)
+		
+			button.rect = button.rect.inflate(20, 20)
+			pygame.draw.rect(self.window, self.BLACK, button.rect, 2)
+
+		pygame.display.update()
