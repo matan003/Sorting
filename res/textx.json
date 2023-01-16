@@ -1,0 +1,16 @@
+{
+	"algorithms": [
+		{
+			"name" : "Bubble Sort",
+			"flavorText" : "Bubble sort is usually the first sorting algorithm you will encounter when learning how to program.\\nIt works by \"bubbling up\" values, i.e. swapping them if the order is wrong.\\nThe worst case time complexity for this algorithm is O(n^2)"
+		},
+		{
+			"name" : "Insertion Sort",
+			"flavorText" : "Bubble sort is usually the first sorting algorithm you will encounter when learning how to program.\\nIt works by \"bubbling up\" values, i.e. swapping them if the order is wrong.\\nThe worst case time complexity for this algorithm is O(n^2)"
+		},
+		{
+			"name" : "Selection Sort",
+			"flavorText" : "Bubble sort is usually the first sorting algorithm you will encounter when learning how to program.\\nIt works by \"bubbling up\" values, i.e. swapping them if the order is wrong.\\nThe worst case time complexity for this algorithm is O(n^2)"
+		}
+	]
+}

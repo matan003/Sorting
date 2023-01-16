@@ -1,6 +1,7 @@
 # information needed to draw the grid
 import pygame
 import button
+import json
 
 pygame.init()
 
@@ -23,6 +24,7 @@ class DrawInformation:
 	TOP_PAD = 150
 
 	_menu_buttons = [button.Button("Bubble Sort"), button.Button("Insertion Sort"), button.Button("Selection Sort")]
+	_flavor_text_dict = []
 
 	def __init__(self, width, height, lst):
 		self.width = width
@@ -31,6 +33,11 @@ class DrawInformation:
 		self.window = pygame.display.set_mode((width, height))
 		pygame.display.set_caption("Sorting algorithm visualizer")
 		self.set_list(lst)
+		flavor_text_json = None
+		with open("..\\res\\textx.json") as file:
+			flavor_text_json = json.load(file)
+		algorithms = flavor_text_json["algorithms"]
+		self._flavor_text_dict = {algorithm["name"]:algorithm["flavorText"] for algorithm in algorithms}
 
 	def get_menu_buttons(self):
 		return self._menu_buttons
@@ -79,7 +86,7 @@ class DrawInformation:
 		if clear_bg:
 			pygame.display.update()
 
-	def draw_menu(self):
+	def draw_menu(self, isDrawingFlavorText, flavor_text):
 		self.window.fill(self.BACKGROUND_COLOR)
 
 		title_text = self.FONT.render("Sorting Algorithms", True, self.BLACK)
@@ -96,5 +103,18 @@ class DrawInformation:
 		
 			button.rect = button.rect.inflate(20, 20)
 			pygame.draw.rect(self.window, self.BLACK, button.rect, 2)
+		if(isDrawingFlavorText == False):
+			pygame.display.update()
+		else:
+			self.draw_flavor_text(flavor_text)
 
+	def draw_flavor_text(self, sorting_algorithm_name):
+		flavor_text = self.FONT.render(self._flavor_text_dict[sorting_algorithm_name], True, self.BLACK)
+		flavor_text_rect = flavor_text.get_rect()
+		flavor_text_rect.width = self.window.get_rect().width / 2
+		flavor_text_rect.height = self.window.get_rect().height
+		flavor_text_rect.right = self.window.get_rect().right
+		#flavor_text_rect.bottom = self.window.get_rect().bottom
+		#flavor_text.get_rect().clamp_ip(flavor_text_rect)
+		self.window.blit(flavor_text, flavor_text_rect)
 		pygame.display.update()

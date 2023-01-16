@@ -70,8 +70,10 @@ def main():
 				ascending = False
 			elif event.key == pygame.K_s and not sorting:
 				in_menu = True
-				while(in_menu):
-					draw_info.draw_menu()
+				isDrawingFlavorText = False
+				flavor_text = None
+				while(in_menu):	
+					draw_info.draw_menu(isDrawingFlavorText, flavor_text)
 
 					for event in pygame.event.get():
 						if event.type == pygame.MOUSEBUTTONDOWN:
@@ -83,7 +85,9 @@ def main():
 								if button.rect.collidepoint(event.pos):
 									sorting_algorithm_name = button.name
 									sorting_algorithm = eval(sorting_algorithm_name.lower().replace(" ", "_"))
-									in_menu = False
+									flavor_text = sorting_algorithm_name	
+									isDrawingFlavorText = True
+									#in_menu = False
 
 							#set in_menu to false to exit
 							pass
