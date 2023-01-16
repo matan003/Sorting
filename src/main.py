@@ -39,28 +39,23 @@ def main():
 
 	while run:
 		clock.tick(30)
-
 		if sorting:
 			try:
 				next(sorting_algorithm_generator)
 			except StopIteration:
 				sorting = False
-
 		else:
 			draw_info.draw(sorting_algorithm_name, ascending)
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False
-			
 			if event.type != pygame.KEYDOWN:
 				continue
-				
 			if event.key == pygame.K_r:
 				sorting = False
 				lst = generate_starting_list(n, min_val, max_val)
 				draw_info.set_list(lst)
-			
 			elif event.key == pygame.K_SPACE and sorting == False:
 				sorting = True
 				sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
@@ -72,14 +67,12 @@ def main():
 				in_menu = True
 				isDrawingFlavorText = False
 				flavor_text = None
-				while(in_menu):	
-					draw_info.draw_menu(isDrawingFlavorText, flavor_text)
 
+				while(in_menu):	
+					clock.tick(30)
+					draw_info.draw_menu(isDrawingFlavorText, flavor_text)
 					for event in pygame.event.get():
 						if event.type == pygame.MOUSEBUTTONDOWN:
-							#Determine what was selected
-							#Update algo and algo name
-
 							buttons = draw_info.get_menu_buttons()
 							for button in buttons:
 								if button.rect.collidepoint(event.pos):
@@ -87,10 +80,10 @@ def main():
 									sorting_algorithm = eval(sorting_algorithm_name.lower().replace(" ", "_"))
 									flavor_text = sorting_algorithm_name	
 									isDrawingFlavorText = True
-									#in_menu = False
-
-							#set in_menu to false to exit
 							pass
+						if event.type == pygame.KEYDOWN:
+							if event.key == pygame.K_s:
+								in_menu = False
 						if event.type == pygame.QUIT:
 							pygame.quit()
 
